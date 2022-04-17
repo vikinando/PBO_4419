@@ -1,0 +1,71 @@
+//Kotlin function
+fun main(args: Array<String>) {
+
+    var number = 5.5
+    print("Result = ${Math.sqrt(number)}")
+}
+
+
+
+//Infix Function Call
+class Structure() {
+
+    infix fun createPyramid(rows: Int) {
+        var k = 0
+        for (i in 1..rows) {
+            k = 0
+            for (space in 1..rows-i) {
+                print("  ")
+            }
+            while (k != 2*i-1) {
+                print("* ")
+                ++k
+            }
+            println()
+        }
+    }
+}
+
+fun main(args: Array<String>) {
+    val p = Structure()
+    p createPyramid 4       // p.createPyramid(4)
+}
+
+
+
+//Default and Named Arguments
+fun displayBorder(character: Char = '=', length: Int = 15) {
+    for (i in 1..length) {
+        print(character)
+    }
+}
+
+fun main(args: Array<String>) {
+    println("Output when no argument is passed:")
+    displayBorder()
+
+    println("\n\n'*' is used as a first argument.")
+    println("Output when first argument is passed:")
+    displayBorder('*')
+
+    println("\n\n'*' is used as a first argument.")
+    println("5 is used as a second argument.")
+    println("Output when both arguments are passed:")
+    displayBorder('*', 5)
+
+}
+
+
+
+//Recursion and Tail Recursion
+fun main(args: Array<String>) {
+    val number = 4
+    val result: Long
+
+    result = factorial(number)
+    println("Factorial of $number = $result")
+}
+
+fun factorial(n: Int): Long {
+    return if (n == 1) n.toLong() else n*factorial(n-1)
+}
