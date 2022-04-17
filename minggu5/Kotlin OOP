@@ -1,0 +1,271 @@
+//Kotlin Class and Objects
+class Lamp {
+
+    // property (data member)
+    private var isOn: Boolean = false
+
+    // member function
+    fun turnOn() {
+        isOn = true
+    }
+
+    // member function
+    fun turnOff() {
+        isOn = false
+    }
+}
+
+
+
+//Kotlin Constructors
+fun main(args: Array<String>) {
+
+    val person1 = Person("Joe", 25)
+
+    println("First Name = ${person1.firstName}")
+    println("Age = ${person1.age}")
+}
+
+class Person(val firstName: String, var age: Int) {
+
+}
+
+
+
+//Kotlin Getters and Setters
+fun main(args: Array<String>) {
+
+    val p = Person()
+    p.name = "jack"
+    println("${p.name}")
+}
+
+class Person {
+    var name: String = "defaultValue"
+
+    get() = field
+
+    set(value) {
+        field = value
+    }
+}
+
+
+
+//Kotlin Inheritance
+open class Person(age: Int, name: String) {
+    init {
+        println("My name is $name.")
+        println("My age is $age")
+    }
+}
+
+class MathTeacher(age: Int, name: String): Person(age, name) {
+
+    fun teachMaths() {
+        println("I teach in primary school.")
+    }
+}
+
+class Footballer(age: Int, name: String): Person(age, name) {
+    fun playFootball() {
+        println("I play for LA Galaxy.")
+    }
+}
+
+fun main(args: Array<String>) {
+    val t1 = MathTeacher(25, "Jack")
+    t1.teachMaths()
+
+    println()
+
+    val f1 = Footballer(29, "Christiano")
+    f1.playFootball()
+}
+
+
+
+//Kotlin Visibility Modifiers
+open class Base() {
+    var a = 1                 // public by default
+    private var b = 2         // private to Base class
+    protected open val c = 3  // visible to the Base and the Derived class
+    internal val d = 4        // visible inside the same module
+
+    protected fun e() { }     // visible to the Base and the Derived class
+}
+
+class Derived: Base() {
+
+    // a, c, d, and e() of the Base class are visible
+    // b is not visible
+
+    override val c = 9        // c is protected
+}
+
+fun main(args: Array<String>) {
+    val base = Base()
+
+    // base.a and base.d are visible
+    // base.b, base.c and base.e() are not visible
+
+    val derived = Derived()
+    // derived.c is not visible
+}
+
+
+
+//Kotlin Abstract Class
+abstract class Person(name: String) {
+
+    init {
+        println("My name is $name.")
+    }
+
+    fun displaySSN(ssn: Int) {
+        println("My SSN is $ssn.")
+    }
+
+    abstract fun displayJob(description: String)
+}
+
+class Teacher(name: String): Person(name) {
+
+    override fun displayJob(description: String) {
+        println(description)
+    }
+}
+
+fun main(args: Array<String>) {
+    val jack = Teacher("Jack Smith")
+    jack.displayJob("I'm a mathematics teacher.")
+    jack.displaySSN(23123)
+}
+
+
+
+//Kotlin Interfaces
+interface MyInterface {
+
+    val test: Int
+
+    fun foo() : String
+
+    fun hello() {
+        println("Hello there, pal!")
+    }
+}
+
+class InterfaceImp : MyInterface {
+
+    override val test: Int = 25
+    override fun foo() = "Lol"
+
+}
+
+fun main(args: Array<String>) {
+    val obj = InterfaceImp()
+
+    println("test = ${obj.test}")
+    print("Calling hello(): ")
+
+    obj.hello()
+
+    print("Calling and printing foo(): ")
+    println(obj.foo())
+}
+
+
+
+//Kotlin Nested and Inner Class
+class Outer {
+
+    val a = "Outside Nested class."
+
+    class Nested {
+        val b = "Inside Nested class."
+        fun callMe() = "Function call from inside Nested class."
+    }
+}
+
+fun main(args: Array<String>) {
+    // accessing member of Nested class
+    println(Outer.Nested().b)
+
+    // creating object of Nested class
+    val nested = Outer.Nested()
+    println(nested.callMe())
+}
+
+
+
+//Kotlin Data Class
+data class User(val name: String, val age: Int)
+
+fun main(args: Array<String>) {
+    val jack = User("jack", 29)
+    println("name = ${jack.name}")
+    println("age = ${jack.age}")
+}
+
+
+
+//Kotlin Sealed Classes
+sealed class Expr
+class Const(val value: Int) : Expr()
+class Sum(val left: Expr, val right: Expr) : Expr()
+object NotANumber : Expr()
+
+
+fun eval(e: Expr): Int =
+        when (e) {
+            is Const -> e.value
+            is Sum -> eval(e.right) + eval(e.left)
+            NotANumber -> java.lang.Double.NaN
+        }
+        
+
+
+//Kotlin Object
+object Test {
+    private var a: Int = 0
+    var b: Int = 1
+
+    fun makeMe12(): Int {
+        a = 12
+        return a
+    }
+}
+
+fun main(args: Array<String>) {
+    val result: Int
+
+    result = Test.makeMe12()
+
+    println("b = ${Test.b}")
+    println("result = $result")
+}
+
+
+
+//Kotlin Companion Objects
+class Person {
+    companion object Test {
+        fun callMe() = println("I'm called.")
+    }
+}
+
+fun main(args: Array<String>) {
+    Person.callMe()
+}
+
+
+
+//Kotlin Extension Function
+fun String.removeFirstLastChar(): String =  this.substring(1, this.length - 1)
+
+fun main(args: Array<String>) {
+    val myString= "Hello Everyone"
+    val result = myString.removeFirstLastChar()
+    println("First character is: $result")
+}
